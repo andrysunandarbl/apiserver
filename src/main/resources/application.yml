@@ -1,0 +1,29 @@
+server:
+  port: 8000
+  address: 127.0.0.1
+
+db:
+  # base configuration for all connection
+  connection:
+    username: demo
+    password: 'd3m0!@#'
+    hostName: 127.0.0.1
+    hostPort: 3306
+    databaseName: pemweb_db
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://${db.connection.hostName}:${db.connection.hostPort}/${db.connection.databaseName}?useSSL=false
+    username: ${db.connection.username}
+    password: ${db.connection.password}
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+logging:
+  file: logs/api.log
+  level:
+    com.springframework: DEBUG
