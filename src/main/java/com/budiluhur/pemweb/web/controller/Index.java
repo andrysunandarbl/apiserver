@@ -12,11 +12,17 @@
  */
 package com.budiluhur.pemweb.web.controller;
 
+import com.budiluhur.pemweb.model.Book;
 import com.budiluhur.pemweb.model.User;
+import com.budiluhur.pemweb.service.BookService;
 import com.budiluhur.pemweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +36,12 @@ public class Index {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    public RequestMappingHandlerMapping requestMappingHandlerMapping;
 
     @RequestMapping("/user")
     public String getAllData(@RequestParam(value = "name") String name){
@@ -58,5 +70,21 @@ public class Index {
         userService.saveUser(user);
         Response response = new Response("OK",user);
         return response;
+    }
+
+    @RequestMapping("/book/search")
+    public Page<Book> getAllBooksData(@RequestParam(value = "name") String name, Pageable pageRequest){
+
+       return bookService.findByAll(name,pageRequest);
+    }
+
+    @RequestMapping("/endpoints")
+    public @ResponseBody
+    Object showEndpointsAction() throws SQLException
+    {
+        return requestMappingHandlerMapping.getHandlerMethods().keySet().stream().map(t ->
+                (t.getMethodsCondition().getMethods().size() == 0 ? "GET" : t.getMethodsCondition().getMethods().toArray()[0]) + " " +
+                        t.getPatternsCondition().getPatterns().toArray()[0]
+        ).toArray();
     }
 }

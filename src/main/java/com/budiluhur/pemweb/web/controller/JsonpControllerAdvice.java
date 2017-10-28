@@ -10,21 +10,19 @@
  * Report bugs to <techsupport@innovez-one.com>.
  * Copyright (C) 2015 PT. Innovez-One. All rights reserved.
  */
-package com.budiluhur.pemweb.dao;
+package com.budiluhur.pemweb.web.controller;
 
-import com.budiluhur.pemweb.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import javax.transaction.Transactional;
-import java.util.List;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpResponseBodyAdvice;
 
 /**
  *
- * Author andry on 24/10/17.
+ * Author andry on 28/10/17.
  */
-@Transactional
-public interface UserRepository extends JpaRepository<User,Long> {
+@ControllerAdvice
+public class JsonpControllerAdvice extends AbstractJsonpResponseBodyAdvice {
 
-    List<User> findByNameContainingOrderByName(String name);
-
+    public JsonpControllerAdvice() {
+        super("callback");
+    }
 }

@@ -10,21 +10,23 @@
  * Report bugs to <techsupport@innovez-one.com>.
  * Copyright (C) 2015 PT. Innovez-One. All rights reserved.
  */
-package com.budiluhur.pemweb.dao;
+package com.budiluhur.pemweb.service;
 
-import com.budiluhur.pemweb.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.budiluhur.pemweb.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  *
- * Author andry on 24/10/17.
+ * Author andry on 28/10/17.
  */
-@Transactional
-public interface UserRepository extends JpaRepository<User,Long> {
 
-    List<User> findByNameContainingOrderByName(String name);
+public interface BookService {
+    Page<Book> listAllByTitle(Pageable pageable);
 
+    void save(Book book);
+
+    Page<Book> findByAll(String name,Pageable pageable);
 }

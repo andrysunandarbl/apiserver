@@ -12,19 +12,19 @@
  */
 package com.budiluhur.pemweb.dao;
 
-import com.budiluhur.pemweb.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.budiluhur.pemweb.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  *
- * Author andry on 24/10/17.
+ * Author andry on 28/10/17.
  */
 @Transactional
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface BookRepository extends PagingAndSortingRepository<Book,Long> {
 
-    List<User> findByNameContainingOrderByName(String name);
-
+    Page<Book> findByTitleContaining(String name, Pageable pageable);
 }
